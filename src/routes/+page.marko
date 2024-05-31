@@ -1,0 +1,37 @@
+static const generateRow = (
+  (data) =>
+    new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(data);
+      }, 1000);
+    })
+);
+<!-- this works as expected -->
+<div>
+  <await(generateRow("div contents")) client-reorder>
+    <@placeholder>
+      <div>div placeholder</div>
+    </@placeholder>
+    <@then|result|>
+      <div>${result}</div>
+    </@then>
+  </await>
+</div>
+
+<!-- but when the placeholder is in a table row, it doesn't work -->
+<table>
+  <tbody>
+    <await(generateRow("row contents")) client-reorder>
+      <@placeholder>
+        <tr>
+          <td>table placeholder</td>
+        </tr>
+      </@placeholder>
+      <@then|result|>
+        <tr>
+          <td>${result}</td>
+        </tr>
+      </@then>
+    </await>
+  </tbody>
+</table>
